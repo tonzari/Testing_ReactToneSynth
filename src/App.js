@@ -11,7 +11,7 @@ function playSynth() {
 }
 
 function increaseFreqs() {
-  freqs = freqs.map(f =>  f * num );
+  freqs = freqs.map(f =>  f + +num);
   console.log(freqs)
 }
 
@@ -25,14 +25,15 @@ function App() {
 
   function handleChangeNumber(e) {
      num = numberRef.current.value;
+     console.log(num)
   }
 
   return (
     <div>
       <button id="button" onClick={ playSynth }>click for synth note</button>
       <button onClick={ resetFreqs }>reset</button>
-      <input ref={numberRef} type="number" />
-      <button onClick={ handleChangeNumber }>change frequency increment value</button>
+      <input ref={ numberRef } onMouseUp={ handleChangeNumber} type="range" min="0" max="100" />
+      {/* <button onClick={ handleChangeNumber }>change frequency increment value</button> */}
     </div>
   );
 }
