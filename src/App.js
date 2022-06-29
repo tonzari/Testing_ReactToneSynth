@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import * as Tone from "tone";
+import { useRef } from "react";
+
+const synth = new Tone.PolySynth().toDestination();
+let freqs = [30,60,90,120];
+let num = 2;
+
+function playSynth() {
+  synth.triggerAttackRelease(freqs, 0.01)
+  increaseFreqs();
+}
+
+function increaseFreqs() {
+  freqs = freqs.map(f =>  f * num );
+  console.log(freqs)
+}
+
+function resetFreqs() {
+  freqs = [30,60,90,120];
+}
 
 function App() {
+
+  const numberRef = useRef();
+
+  function handleChangeNumber(e) {
+     num = numberRef.current.value;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button id="button" onClick={ playSynth }>click for synth note</button>
+      <button onClick={ resetFreqs }>reset</button>
+      <input ref={numberRef} type="number" />
+      <button onClick={ handleChangeNumber }>change frequency increment value</button>
     </div>
   );
 }
